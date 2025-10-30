@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Results | Smart Traffic Violation Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed, #ff758c, #ff7eb3);
+            background-size: 300% 300%;
+            animation: gradientShift 12s ease infinite;
+            font-family: "Poppins", sans-serif;
+            padding-top: 70px;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+            letter-spacing: 0.5px;
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 25px;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+            padding: 35px;
+            margin: auto;
+            width: 85%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        img {
+            border-radius: 15px;
+            margin-bottom: 25px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .violations-list {
+            text-align: left;
+            margin-top: 20px;
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .violations-list li {
+            font-size: 18px;
+            color: #1a1a1a;
+            padding: 5px 0;
+        }
+
+        .chart-section {
+            margin-top: 45px;
+            background: linear-gradient(135deg, #fff59d, #ffe082);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: inset 0px 0px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            color: #d62828;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            border-radius: 30px;
+            padding: 10px 25px;
+            background: linear-gradient(90deg, #007bff, #00bcd4);
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #00bcd4, #007bff);
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 60px;
+            background: linear-gradient(90deg, #007bff, #00a8ff);
+            color: white;
+            text-align: center;
+            padding: 18px;
+            border-radius: 15px 15px 0 0;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        footer span {
+            color: #fff799;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">🚦 Smart Traffic Violation Detector</a>
+        </div>
+    </nav>
+
+    <!-- Main container -->
+    <div class="result-container mt-5">
+        <h2 class="mb-4 text-primary fw-bold">Detection Results</h2>
+
+        <!-- Annotated image -->
+        <h5 class="mb-2">Detected Image:</h5>
+        <img src="{{ result_image.replace('\\', '/') }}" alt="Detected Result">
+
+        
+        <!-- Violations list -->
+        <h5 class="mt-4 text-secondary">Detected Violations:</h5>
+        {% if violations %}
+        <ul class="violations-list list-unstyled">
+            {% for violation in violations %}
+            <li>• {{ violation }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">No violations detected.</p>
+        {% endif %}
+
+        <!-- Chart section -->
+        <div class="chart-section">
+            <h5 class="text-dark fw-bold">Violation Frequency Chart:</h5>
+            {% if chart_path %}
+            <img src="{{ chart_path.replace('\\', '/') }}" alt="Violations Chart">
+
+            
+            <h4 class="mt-3">Most Common Violation: <span class="highlight">{{ most_common }}</span></h4>
+            {% else %}
+            <p class="text-muted">Chart data unavailable.</p>
+            {% endif %}
+        </div>
+
+        <a href="/" class="btn btn-primary mt-4">🔁 Upload Another Image</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <p>💡 Smart Traffic Violation Detector — <span>Powered by Bindu 🚦</span></p>
+    </footer>
+
+</body>
+</html>
